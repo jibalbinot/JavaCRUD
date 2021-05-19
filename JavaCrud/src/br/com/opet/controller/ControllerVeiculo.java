@@ -15,10 +15,23 @@ public class ControllerVeiculo {
 		while(opc != 0) {
 			switch(opc) {
 			case 1 :
-				System.out.println("Irá cadastrar ...");
+				//System.out.println("Irá cadastrar ...");
+				v = tv.adicionar();
+				if(v.inserir(v)){
+					tv.mensagem("Veiculo inserido com sucesso!");
+				} else {
+					tv.erro("Veiculo não inserido!");
+				}
 				break;
 			case 2 :
-				System.out.println("Irá consultar");
+				//System.out.println("Irá consultar");
+				v.setId(tv.lerId());
+				v = v.consultar(v);
+				if(v != null) {
+					v.mostrar();
+				} else {
+					tv.erro("Veiculo não encontrado");
+				}
 				break;
 			case 3 :
 				System.out.println("Veiculos cadastrados ...");
@@ -26,17 +39,30 @@ public class ControllerVeiculo {
 				tv.mostrar(alVeiculo);
 				break;
 			case 4 :
-				System.out.println("Irá alterar ...");
+				//System.out.println("Irá alterar ...");
+				v = new Veiculo();
+				v.setId(tv.lerId());
+				v = v.consultar(v);
+				if(v != null) {
+					v.mostrar();
+					v = tv.alterar(v.getId());
+					if(v.atualizar(v)) {
+						tv.mensagem("Veiculo atualizado com sucesso!");
+					} else {
+						tv.erro("Veiculo não alterado!");
+					}	
+				} else {
+					tv.erro("Veiculo não encontrado");
+				}
 				break;
 			case 5 :
 				System.out.println("Irá excluir ...");
+				//implementar valendo 1 ponto
 				break;
 			default :
 				tv.erro("Opção inválida");
 			}
 			opc = tv.menu();
 		}
-		
 	}
-
 }
